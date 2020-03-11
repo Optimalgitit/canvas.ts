@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas.ts testing</title>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+</body>
+</html>
+<script src="canvas.js"></script>
+<script>
+    initializeCanvas();
+    let radius = 0
+    loop(delay => {
+        console.log(delay)
+        circle(middleX, middleY, radius);
+        radius += 0.1 * delay
+    })
+</script>
