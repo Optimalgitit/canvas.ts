@@ -34,7 +34,7 @@ function rect(
   y: number,
   width: number,
   height: number,
-  fill: boolean = false
+  fill: boolean = true
 ): void {
   // Draw a rectangle on the screen
   y = calcParseY(y, height);

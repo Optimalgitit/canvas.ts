@@ -21,7 +21,7 @@ function addAdaptListener() {
 function clear() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
-function rect(x, y, width, height, fill = false) {
+function rect(x, y, width, height, fill = true) {
     // Draw a rectangle on the screen
     y = calcParseY(y, height);
     if (fill)
