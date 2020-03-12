@@ -46,6 +46,8 @@ function circle(x, y, radius, fill = true) {
     ctx.closePath();
 }
 function line(x, y, x2, y2) {
+    y = parseY(y);
+    y2 = parseY(y2);
     ctx.beginPath();
     ctx.moveTo(x, y);
     ctx.lineTo(x2, y2);
