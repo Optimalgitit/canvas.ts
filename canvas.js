@@ -56,7 +56,7 @@ let LastTime = 0;
 function subLoop(func, dTime) {
     let delay = dTime - LastTime;
     LastTime = dTime;
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    clear();
     func(delay);
     requestAnimationFrame(dTime => {
         subLoop(func, dTime);
