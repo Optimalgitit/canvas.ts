@@ -68,7 +68,7 @@ function line(x: number, y: number, x2: number, y2: number) {
 }
 
 let LastTime: number = 0;
-function subLoop(func: (...args: any[]) => any, dTime) {
+function subLoop(func: (...args: any[]) => any, dTime: number) {
   let delay = dTime - LastTime;
   LastTime = dTime;
   clear()
