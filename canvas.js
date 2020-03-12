@@ -1,6 +1,8 @@
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
-const parseX = (x) => canvas.width - x;
+const parseY = (y) => canvas.height - y;
+const calculateY = (y, height) => y - height;
+const calcParseY = (y, height) => calculateY(parseY(y), height);
 let middleX = canvas.width / 2;
 let middleY = canvas.height / 2;
 function removeBorders() {
@@ -16,9 +18,12 @@ function winAdapt() {
 function addAdaptListener() {
     window.onresize = winAdapt;
 }
+function clear() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
 function rect(x, y, width, height, fill = false) {
     // Draw a rectangle on the screen
-    x = parseX(x);
+    y = calcParseY(y, height);
     if (fill)
         ctx.fillRect(x, y, width, height);
     else
@@ -31,7 +36,7 @@ function fillColor(style) {
     ctx.fillStyle = style;
 }
 function circle(x, y, radius, fill = true) {
-    x = parseX(x);
+    y = parseY(y);
     ctx.beginPath();
     ctx.arc(x, y, radius, 0, Math.PI * 2);
     if (fill)
@@ -59,7 +64,9 @@ function subLoop(func, dTime) {
 }
 function loop(func) {
     LastTime = 0;
-    requestAnimationFrame((dTime) => { subLoop(func, dTime); });
+    requestAnimationFrame(dTime => {
+        subLoop(func, dTime);
+    });
 }
 function initializeCanvas() {
     removeBorders();

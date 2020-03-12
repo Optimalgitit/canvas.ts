@@ -1,7 +1,10 @@
 const canvas = document.getElementById("canvas") as HTMLCanvasElement;
 const ctx = canvas.getContext("2d");
 
-const parseX = (x: number) => canvas.width - x;
+const parseY = (y: number) => canvas.height - y;
+const calculateY = (y: number, height: number) => y - height;
+
+const calcParseY = (y: number, height: number) => calculateY(parseY(y), height);
 
 let middleX = canvas.width / 2;
 let middleY = canvas.height / 2;
@@ -20,6 +23,10 @@ function winAdapt() {
 
 function addAdaptListener() {
   window.onresize = winAdapt;
+} 
+
+function clear() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height)
 }
 
 function rect(
@@ -30,7 +37,7 @@ function rect(
   fill: boolean = false
 ): void {
   // Draw a rectangle on the screen
-  x = parseX(x);
+  y = calcParseY(y, height);
   if (fill) ctx.fillRect(x, y, width, height);
   else ctx.strokeRect(x, y, width, height);
 }
@@ -44,7 +51,7 @@ function fillColor(style: string) {
 }
 
 function circle(x: number, y: number, radius: number, fill: boolean = true) {
-  x = parseX(x);
+  y = parseY(y);
   ctx.beginPath();
   ctx.arc(x, y, radius, 0, Math.PI * 2);
   if (fill) ctx.fill();
@@ -60,20 +67,22 @@ function line(x: number, y: number, x2: number, y2: number) {
   ctx.closePath();
 }
 
-let LastTime: number = 0
+let LastTime: number = 0;
 function subLoop(func: (...args: any[]) => any, dTime) {
-  let delay = dTime - LastTime
-  LastTime = dTime
-  ctx.clearRect(0, 0, canvas.width, canvas.height)
-  func(delay)
+  let delay = dTime - LastTime;
+  LastTime = dTime;
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  func(delay);
   requestAnimationFrame(dTime => {
     subLoop(func, dTime);
   });
 }
 
 function loop(func: (...args: any[]) => any): void {
-  LastTime = 0
-  requestAnimationFrame((dTime) => {subLoop(func, dTime)})
+  LastTime = 0;
+  requestAnimationFrame(dTime => {
+    subLoop(func, dTime);
+  });
 }
 
 function initializeCanvas() {
