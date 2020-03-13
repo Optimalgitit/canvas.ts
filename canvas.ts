@@ -9,6 +9,80 @@ const calcParseY = (y: number, height: number) => calculateY(parseY(y), height);
 let middleX = canvas.width / 2;
 let middleY = canvas.height / 2;
 
+interface KeyStyle {
+  forward: String;
+  backward: String;
+  left: String;
+  right: String;
+  space: String;
+}
+
+interface KeyFuncStyle {
+  forward: (event: KeyboardEvent) => any;
+  backward: (event: KeyboardEvent) => any;
+  left: (event: KeyboardEvent) => any;
+  right: (event: KeyboardEvent) => any;
+  space: (event: KeyboardEvent) => any;
+}
+
+const keyboardControlStyles: { wasd: KeyStyle; arrow: KeyStyle } = {
+  wasd: { forward: "w", left: "a", backward: "s", right: "d", space: " " },
+  arrow: {
+    forward: "ArrowUp",
+    left: "ArrowLeft",
+    backward: "ArrowDown",
+    right: "ArrowRight",
+    space: " "
+  }
+};
+
+
+
+function keyPressed(keyStyle: KeyStyle, functions: KeyFuncStyle) {
+  addEventListener('keydown', event => {
+    switch (event.key) {
+      case keyStyle.forward:
+        functions.forward(event);
+        break;
+      case keyStyle.backward:
+        functions.backward(event);
+        break;
+      case keyStyle.left:
+        functions.left(event);
+        break;
+      case keyStyle.right:
+        functions.right(event);
+        break;
+      case keyStyle.space:
+        functions.space(event);
+        break;
+    }
+  })
+}
+
+function keyReleased(keyStyle: KeyStyle, functions: KeyFuncStyle) {
+  addEventListener("keyup", event => {
+    switch (event.key) {
+      case keyStyle.forward:
+        functions.forward(event);
+        break;
+      case keyStyle.backward:
+        functions.backward(event);
+        break;
+      case keyStyle.left:
+        functions.left(event);
+        break;
+      case keyStyle.right:
+        functions.right(event);
+        break;
+      case keyStyle.space:
+        functions.space(event);
+        break;
+    }
+  });
+}
+
+
 function removeBorders() {
   canvas.style.margin = canvas.style.padding = document.body.style.margin = document.body.style.padding =
     "0";
@@ -23,10 +97,10 @@ function winAdapt() {
 
 function addAdaptListener() {
   window.onresize = winAdapt;
-} 
+}
 
 function clear() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height)
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 
 function rect(
@@ -61,7 +135,7 @@ function circle(x: number, y: number, radius: number, fill: boolean = true) {
 
 function line(x: number, y: number, x2: number, y2: number) {
   y = parseY(y);
-  y2 = parseY(y2)
+  y2 = parseY(y2);
   ctx.beginPath();
   ctx.moveTo(x, y);
   ctx.lineTo(x2, y2);
@@ -73,7 +147,7 @@ let LastTime: number = 0;
 function subLoop(func: (...args: any[]) => any, dTime: number) {
   let delay = dTime - LastTime;
   LastTime = dTime;
-  clear()
+  clear();
   func(delay);
   requestAnimationFrame(dTime => {
     subLoop(func, dTime);

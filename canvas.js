@@ -5,6 +5,58 @@ const calculateY = (y, height) => y - height;
 const calcParseY = (y, height) => calculateY(parseY(y), height);
 let middleX = canvas.width / 2;
 let middleY = canvas.height / 2;
+const keyboardControlStyles = {
+    wasd: { forward: "w", left: "a", backward: "s", right: "d", space: " " },
+    arrow: {
+        forward: "ArrowUp",
+        left: "ArrowLeft",
+        backward: "ArrowDown",
+        right: "ArrowRight",
+        space: " "
+    }
+};
+function keyPressed(keyStyle, functions) {
+    addEventListener('keydown', event => {
+        switch (event.key) {
+            case keyStyle.forward:
+                functions.forward(event);
+                break;
+            case keyStyle.backward:
+                functions.backward(event);
+                break;
+            case keyStyle.left:
+                functions.left(event);
+                break;
+            case keyStyle.right:
+                functions.right(event);
+                break;
+            case keyStyle.space:
+                functions.space(event);
+                break;
+        }
+    });
+}
+function keyReleased(keyStyle, functions) {
+    addEventListener("keyup", event => {
+        switch (event.key) {
+            case keyStyle.forward:
+                functions.forward(event);
+                break;
+            case keyStyle.backward:
+                functions.backward(event);
+                break;
+            case keyStyle.left:
+                functions.left(event);
+                break;
+            case keyStyle.right:
+                functions.right(event);
+                break;
+            case keyStyle.space:
+                functions.space(event);
+                break;
+        }
+    });
+}
 function removeBorders() {
     canvas.style.margin = canvas.style.padding = document.body.style.margin = document.body.style.padding =
         "0";
