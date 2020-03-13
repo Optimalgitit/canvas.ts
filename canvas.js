@@ -16,45 +16,48 @@ const keyboardControlStyles = {
     }
 };
 function keyPressed(keyStyle, functions) {
-    addEventListener('keydown', event => {
+    addEventListener("keydown", event => {
         switch (event.key) {
             case keyStyle.forward:
-                functions.forward(event);
+                functions.forward?.(event);
                 break;
             case keyStyle.backward:
-                functions.backward(event);
+                functions.backward?.(event);
                 break;
             case keyStyle.left:
-                functions.left(event);
+                functions.left?.(event);
                 break;
             case keyStyle.right:
-                functions.right(event);
+                functions.right?.(event);
                 break;
             case keyStyle.space:
-                functions.space(event);
+                functions.space?.(event);
                 break;
         }
+        functions.any?.(event);
     });
 }
 function keyReleased(keyStyle, functions) {
     addEventListener("keyup", event => {
         switch (event.key) {
             case keyStyle.forward:
-                functions.forward(event);
+                functions.forward?.(event);
                 break;
             case keyStyle.backward:
-                functions.backward(event);
+                functions.backward?.(event);
                 break;
             case keyStyle.left:
-                functions.left(event);
+                functions.left?.(event);
                 break;
             case keyStyle.right:
-                functions.right(event);
+                functions.right?.(event);
                 break;
             case keyStyle.space:
-                functions.space(event);
+                functions.space?.(event);
                 break;
         }
+        ;
+        functions.any?.(event);
     });
 }
 function removeBorders() {

@@ -18,11 +18,12 @@ interface KeyStyle {
 }
 
 interface KeyFuncStyle {
-  forward: (event: KeyboardEvent) => any;
-  backward: (event: KeyboardEvent) => any;
-  left: (event: KeyboardEvent) => any;
-  right: (event: KeyboardEvent) => any;
-  space: (event: KeyboardEvent) => any;
+  forward?: (event: KeyboardEvent) => any;
+  backward?: (event: KeyboardEvent) => any;
+  left?: (event: KeyboardEvent) => any;
+  right?: (event: KeyboardEvent) => any;
+  space?: (event: KeyboardEvent) => any;
+  any?: (event: KeyboardEvent) => any;
 }
 
 const keyboardControlStyles: { wasd: KeyStyle; arrow: KeyStyle } = {
@@ -36,52 +37,51 @@ const keyboardControlStyles: { wasd: KeyStyle; arrow: KeyStyle } = {
   }
 };
 
-
-
 function keyPressed(keyStyle: KeyStyle, functions: KeyFuncStyle) {
-  addEventListener('keydown', event => {
+  addEventListener("keydown", event => {
     switch (event.key) {
       case keyStyle.forward:
-        functions.forward(event);
+        functions.forward?.(event);
         break;
       case keyStyle.backward:
-        functions.backward(event);
+        functions.backward?.(event);
         break;
       case keyStyle.left:
-        functions.left(event);
+        functions.left?.(event);
         break;
       case keyStyle.right:
-        functions.right(event);
+        functions.right?.(event);
         break;
       case keyStyle.space:
-        functions.space(event);
+        functions.space?.(event);
         break;
     }
-  })
+    functions.any?.(event);
+  });
 }
 
 function keyReleased(keyStyle: KeyStyle, functions: KeyFuncStyle) {
   addEventListener("keyup", event => {
     switch (event.key) {
       case keyStyle.forward:
-        functions.forward(event);
+        functions.forward?.(event);
         break;
       case keyStyle.backward:
-        functions.backward(event);
+        functions.backward?.(event);
         break;
       case keyStyle.left:
-        functions.left(event);
+        functions.left?.(event);
         break;
       case keyStyle.right:
-        functions.right(event);
+        functions.right?.(event);
         break;
       case keyStyle.space:
-        functions.space(event);
+        functions.space?.(event);
         break;
-    }
+    };
+    functions.any?.(event)
   });
 }
-
 
 function removeBorders() {
   canvas.style.margin = canvas.style.padding = document.body.style.margin = document.body.style.padding =
